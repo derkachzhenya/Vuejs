@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue js</title>
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" style="display:flex; justify-content:center; align-items: center; height: 100vh;">
+        <div v-cloak style="border: 1px solid #eee; padding: 15px">
+
+            <input type="text" v-model="name">
+            <button v-on:click="addItem">Добавить</button>
+            <ol v-if="items.length>0">
+                <li v-for="(item, index) in items">
+                    {{ item }}
+                    <button v-on:click="deleteItem(index)">x</button>
+                </li>
+            </ol>
+            <p v-else>Нет ни одной задачи</p>
+        </div>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        Vue.createApp({
+
+            data: function () {
+
+                return {
+                    name: '',
+                    items: [],
+                }
+            },
+
+            methods: {
+                addItem: function () {
+
+                    if (this.name === '') return;
+                    this.items.push(this.name)
+                    this.name = ''
+                },
+
+                deleteItem: function (index) {
+                    this.items = this.items.filter(function (_item, _index) {
+                        return (_index !== index);
+                    })
+                }
+            }
+
+        }).mount('#app')
+
+    </script>
+
+</body>
+
+</html>
